@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Retrofit Chapter 7</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="add">Add Person</string>
+    <string name="update">Update</string>
+    <string name="delete">delete</string>
+</resources>
