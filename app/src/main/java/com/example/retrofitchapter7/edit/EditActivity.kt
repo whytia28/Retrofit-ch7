@@ -7,10 +7,12 @@ import android.widget.Toast
 import com.example.retrofitchapter7.R
 import com.example.retrofitchapter7.pojo.GetPersonsResponse
 import kotlinx.android.synthetic.main.activity_edit.*
+import org.koin.android.ext.android.inject
+import org.koin.core.parameter.parametersOf
 
 class EditActivity : AppCompatActivity(), EditPersonPresenter.Listener {
 
-    private lateinit var presenter: EditPersonPresenter
+    private  val presenter: EditPersonPresenter by inject { parametersOf(this) }
     private lateinit var result: GetPersonsResponse.Result
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,7 +23,6 @@ class EditActivity : AppCompatActivity(), EditPersonPresenter.Listener {
             result = it
         }
 
-        presenter = EditPersonPresenter(this)
 
         et_firstName.setText(result.firstName)
         et_lastName.setText(result.lastName)

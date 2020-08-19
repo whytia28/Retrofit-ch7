@@ -1,17 +1,18 @@
 package com.example.retrofitchapter7.main
 
+import com.example.retrofitchapter7.network.ApiService
 import com.example.retrofitchapter7.pojo.GetPersonsResponse
-import com.example.retrofitchapter7.network.ApiClient
 import com.example.retrofitchapter7.pojo.DeletePersonResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MainPresenter(val listener: Listener) {
+class MainPresenter(val listener: Listener, private val apiService: ApiService) {
+
 
     fun getPersonList() {
         listener.showProgressBar()
-        ApiClient.instance.getAllPerson().enqueue(object : Callback<GetPersonsResponse> {
+        apiService.getAllPerson().enqueue(object : Callback<GetPersonsResponse> {
             override fun onFailure(call: Call<GetPersonsResponse>, t: Throwable) {
                 t.message?.let {
                     listener.getPersonListFailure(it)
@@ -42,7 +43,7 @@ class MainPresenter(val listener: Listener) {
 
     fun deletePerson(result: GetPersonsResponse.Result) {
         listener.showProgressBar()
-        ApiClient.instance.deletePerson(result.iD.toString()).enqueue(object : Callback<DeletePersonResponse> {
+        apiService.deletePerson(result.iD.toString()).enqueue(object : Callback<DeletePersonResponse> {
             override fun onFailure(call: Call<DeletePersonResponse>, t: Throwable) {
                 t.message?.let {
                     listener.onPersonDeleteFailed(it)

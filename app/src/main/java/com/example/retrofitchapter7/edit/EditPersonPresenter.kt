@@ -1,6 +1,7 @@
 package com.example.retrofitchapter7.edit
 
-import com.example.retrofitchapter7.network.ApiClient
+
+import com.example.retrofitchapter7.network.ApiService
 import com.example.retrofitchapter7.pojo.GetPersonsResponse
 import com.example.retrofitchapter7.pojo.PutPersonBody
 import com.example.retrofitchapter7.pojo.PutPersonResponse
@@ -9,11 +10,11 @@ import retrofit2.Callback
 import retrofit2.Response
 
 
-class EditPersonPresenter(val listener: Listener) {
+class EditPersonPresenter(val listener: Listener, private val apiService: ApiService) {
 
     fun updatePerson(result: GetPersonsResponse.Result) {
         val objectPut = PutPersonBody(result.firstName,result.lastName)
-        ApiClient.instance.updatePerson(objectPut, result.iD.toString()).enqueue(object : Callback<PutPersonResponse> {
+        apiService.updatePerson(objectPut, result.iD.toString()).enqueue(object : Callback<PutPersonResponse> {
             override fun onFailure(call: Call<PutPersonResponse>, t: Throwable) {
                 t.message?.let {
                     listener.onUpdatePersonFailed(it)
