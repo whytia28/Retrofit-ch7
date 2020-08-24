@@ -2,29 +2,31 @@ package com.example.retrofitchapter7.addperson
 
 import com.example.retrofitchapter7.pojo.PostPersonBody
 import com.example.retrofitchapter7.pojo.PostPersonResponse
-import com.example.retrofitchapter7.network.ApiClient
+import com.example.retrofitchapter7.network.ApiService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class AddPersonPresenter(val listener: Listener) {
+class AddPersonPresenter(private val apiService: ApiService) {
+
+    var listener: Listener? = null
 
     fun addPerson(firstName: String, lastName: String) {
 
         val person =
             PostPersonBody(firstName, lastName)
 
-        ApiClient.instance.addPerson(person).enqueue(object : Callback<PostPersonResponse> {
+        apiService.addPerson(person).enqueue(object : Callback<PostPersonResponse> {
             override fun onFailure(call: Call<PostPersonResponse>, t: Throwable) {
 
-                listener.onAddPersonFailure(t.toString())
+                listener?.onAddPersonFailure(t.toString())
             }
 
             override fun onResponse(
                 call: Call<PostPersonResponse>,
                 response: Response<PostPersonResponse>
             ) {
-                listener.onAddPersonSuccess("Add success")
+                listener?.onAddPersonSuccess("Add success")
             }
 
         })

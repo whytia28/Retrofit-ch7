@@ -16,6 +16,6 @@ interface ApiService {
     fun updatePerson(@Body body: PutPersonBody, @Path("id") id: String): Call<PutPersonResponse>
 
     @DELETE("person/{id}")
-    fun deletePerson(@Path("id") id: String) : Call<DeletePersonResponse>
+    fun deletePerson(@Path("id") id: String): Call<DeletePersonResponse>
 
 }

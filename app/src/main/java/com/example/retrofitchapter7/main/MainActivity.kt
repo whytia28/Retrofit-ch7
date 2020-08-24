@@ -10,23 +10,29 @@ import com.example.retrofitchapter7.*
 import com.example.retrofitchapter7.addperson.AddPersonActivity
 import com.example.retrofitchapter7.edit.EditActivity
 import com.example.retrofitchapter7.pojo.GetPersonsResponse
+import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_main.*
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(),
     MainPresenter.Listener {
 
-    private lateinit var presenter: MainPresenter
+    @Inject
+    lateinit var presenter: MainPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        presenter = MainPresenter(this)
+        AndroidInjection.inject(this)
+
+        presenter.listener = this
         presenter.getPersonList()
 
         btn_fab.setOnClickListener {
             presenter.goToAddActivity()
         }
     }
+
     override fun onResume() {
         presenter.getPersonList()
         super.onResume()
